@@ -1,61 +1,49 @@
 const mongoose = require('mongoose')
 
 
-const TracksSchema = new mongoose.Schema
-    (
-        {
+const TracksSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+        },
+        album: {
+            type: String,
+        },
+        cover: {
+            type: String,
+            validate: {
+                validator: (req) => {
+                    return true;
+                },
+                message: "ERROR_URL",
+            },
+        },
+        artist: {
             name: {
                 type: String,
-            }
-        },
-        {
-            album: {
-                type: String,
-            }
-        },
-        {
-            cover: {
-                type: String,
-                validator: (req) => {
-                    return true
-                },
-                message: 'ERROR_URL'
-            }
-        },
-        {
-            artist: {
-                type: String,
-                name: {
-                    type: String
-                },
-                nickname: {
-                    type: String,
-                },
-                nationality: {
-                    type: String,
-                },
-
             },
-            durations: {
-                start: {
-                    type: Number
-                },
-                end: {
-                    type: Number
-                }
+            nickname: {
+                type: String,
             },
-            //VA SER UN STRING CON CIERTATO NUMERO DE CARACTERES O PATRON DE ID
-            mediaId: {
-                type: mongoose.Types.ObjectId,
-            }
-
+            nationality: {
+                type: String,
+            },
         },
-
-
-        {
-            timestamps: true,// me va a marcar las fechas de actualizaciuón
-            versionKey: false
-        }
-
-    )
+        duration: {
+            start: {
+                type: Number,
+            },
+            end: {
+                type: Number,
+            },
+        },
+        mediaId: {
+            type: mongoose.Types.ObjectId,
+        },
+    },
+    {
+        versionKey: false,
+        timestamps: true,
+    }
+);
 module.exports = mongoose.model("tracks", TracksSchema)
