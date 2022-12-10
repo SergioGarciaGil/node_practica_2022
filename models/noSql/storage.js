@@ -15,9 +15,10 @@ const StorageSchema = new mongoose.Schema
         },
 
         {
-            timestamps: true,// me va a marcar las fechas de actualizaciuón
-            versionKey: false
+            versionKey: false,
+            timestamps: true,
         }
+
 
     )
 module.exports = mongoose.model("storages", StorageSchema)

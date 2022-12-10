@@ -6,8 +6,9 @@ const dbConnect = require('./config/mongo')
 
 
 app.use(cors())
-
 app.use(express.json())
+app.use(express.static("storage"))//oye los recursos publicos quiero que lo saques de la caperta que se llama stORAGE PARA PODERLA VER EN EL NAVEGADOR
+
 const port = process.env.PORT || 3000
 
 // Aqui invocamos las rutas
