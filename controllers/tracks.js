@@ -14,15 +14,22 @@ const getItems = async (req, res) => {
 
 
 }
-const getItem = (req, res) => {
-
+const getItem = async (req, res) => {
+    try {
+        req = matchedData(req)
+        const { id } = req
+        const data = await tracksModel.findById(id)
+        res.send({ data })
+    } catch (error) {
+        handdleHttpError(res, "Error_get_items")
+    }
 }
 const createItem = async (req, res) => {
     try {
         const body = matchedData(req)//express con esta funcion hace cumplir la funcion del validator y no deja ingresar un valor diferente
         const data = await tracksModel.create(body)
 
-        res.send({ body, data })
+        res.send({ data })
     } catch (error) {
         handdleHttpError(res, 'ERROR_CREATE_ITEM')
     }
