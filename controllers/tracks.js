@@ -16,8 +16,8 @@ const getItems = async (req, res) => {
 }
 const getItem = async (req, res) => {
     try {
-        req = matchedData(req)
-        const { id } = req
+        // req = matchedData(req)
+        const { id } = matchedData(req)
         const data = await tracksModel.findById(id)
         res.send({ data })
     } catch (error) {
