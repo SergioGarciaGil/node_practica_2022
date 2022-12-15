@@ -12,7 +12,6 @@ router.get('/', getItems)
 
 router.get('/:id', validatorGetItem, getItem)
 router.post('/', uploadMiddleware.single('myfile'), createItem)//single para enviar un solo archivo y multi para muchos archivos
-router.put('/:id', updateItem)
 router.delete('/:id', validatorGetItem, deleteItem)
 
 module.exports = router

@@ -1,9 +1,10 @@
+const fs = require('fs');
 const { storageModel } = require('../models')
 const { matchedData } = require('express-validator')
 const handdleHttpError = require('../utils/handdleError')
 
 const PUBLIC_URL = process.env.PUBLIC_URL
-
+const MEDIA_PATH = `${__dirname}/../storage`
 
 const getItems = async (req, res) => {
     try {
@@ -35,23 +36,30 @@ const createItem = async (req, res) => {
 
     res.send({ data })
 }
-const updateItem = async (req, res) => {
+
+const deleteItem = async (req, res) => {
     try {
-        const { id, ...body } = req.params
-        const data = await storageModel.findOneAndUpdate(id, body, {
-            new: true,
-        })
+
+        const { id } = req.params
+        const dataFile = await storageModel.findById(id)
+        await storageModel.delete({ _id: id })
+        const { filename } = dataFile
+        const filePath = `${MEDIA_PATH}/${filename}`
+        fs.unlinkSync(filePath)//le digo que elimine lo que esta en ese registro
+
+        const data = {
+            filePath,
+            deleted: 1
+        }
         res.send({ data })
     } catch (error) {
-        handdleHttpError(res, 'ERROR_UPDATE_ITEM')
+        handdleHttpError(res, 'ERROR_GET_DELETE')
     }
 }
-const deleteItem = () => { }
 
 module.exports = {
     getItems,
     getItem,
     createItem,
-    updateItem,
     deleteItem
 }
