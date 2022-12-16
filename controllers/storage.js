@@ -26,15 +26,21 @@ const getItem = async (req, res) => {
     }
 }
 const createItem = async (req, res) => {
-    const { file } = req
-    console.log(file)
-    const fileData = {
-        filename: file.filename,
-        url: `${PUBLIC_URL}/${file.filename}`
-    }
-    const data = await storageModel.create(fileData)
+    try {
+        const { file } = req
+        console.log(file)
+        const fileData = {
+            filename: file.filename,
+            url: `${PUBLIC_URL}/${file.filename}`
+        }
+        const data = await storageModel.create(fileData)
 
-    res.send({ data })
+        res.send({ data })
+    } catch (error) {
+        handdleHttpError(res, 'ERROR_DETAIL_ITEM')
+
+
+    }
 }
 
 const deleteItem = async (req, res, next) => {
