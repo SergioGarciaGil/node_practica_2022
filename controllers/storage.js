@@ -37,12 +37,21 @@ const createItem = async (req, res) => {
     res.send({ data })
 }
 
-const deleteItem = async (req, res) => {
+const deleteItem = async (req, res, next) => {
     try {
 
         const { id } = req.params
         const dataFile = await storageModel.findById(id)
+
         await storageModel.delete({ _id: id })
+        if (!dataFile) {
+            res.send({ message: `Storage con ${id} no existe` })
+            return next()
+        }
+
+        res.send(dataFile)
+
+
         const { filename } = dataFile
         const filePath = `${MEDIA_PATH}/${filename}`
         fs.unlinkSync(filePath)//le digo que elimine lo que esta en ese registro
@@ -53,6 +62,7 @@ const deleteItem = async (req, res) => {
         }
         res.send({ data })
     } catch (error) {
+
         handdleHttpError(res, 'ERROR_GET_DELETE')
     }
 }
