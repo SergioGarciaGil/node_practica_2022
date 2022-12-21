@@ -3,10 +3,10 @@ const { check } = require('express-validator')
 const validateResults = require('../utils/handleValidator')
 
 const validatorRegister = [
-    check('nombre')
+    check('name')
         .exists()
         .notEmpty()
-        .isLength({ min: 3, max: 99 }),
+        .isLength({ min: 4, max: 99 }),
 
     check('age')
         .exists()
@@ -34,7 +34,7 @@ const validatorLogin = [
         .exists()
         .notEmpty()
         .isEmail(),
-    (req, res) => {
+    (req, res, next) => {
         return validateResults(req, res, next)
     }
 ]

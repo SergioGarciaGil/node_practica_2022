@@ -3,4 +3,4 @@ const handdleHttpError = (res, message = 'Algo sucedio', code = 403) => {
     res.send({ error: message })
 }
 
-module.exports = handdleHttpError
+module.exports = { handdleHttpError }
