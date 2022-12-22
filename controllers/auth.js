@@ -28,7 +28,7 @@ const loginCtrl = async (req, res) => {
     try {
         req = matchedData(req)
         const user = await usersModel.findOne({ email: req.email })
-            .select('password ')
+            .select('password name email ')
         if (!user) {
             handdleHttpError(res, "USER_NOT_EXIST", 404)
             return
