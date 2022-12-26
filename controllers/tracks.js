@@ -6,8 +6,10 @@ const handdleHttpError = require('../utils/handdleError')
 const getItems = async (req, res) => {
 
     try {
+        const user = req.user
         const data = await tracksModel.find({})
-        res.send({ data })
+        res.send({ data, user })
+        console.log({ user })
     } catch (error) {
         handdleHttpError(res, 'ERROR_GET_ITEMS')
     }
