@@ -4,7 +4,7 @@ const authMiddleware = require('../milddeware/ssesion')
 const { validatorCreateItem, validatorGetItem } = require('../validators/tracks')
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controllers/tracks');
 const checkRol = require('../milddeware/rol');
-router.get('/', authMiddleware, getItems)
+router.get('/', authMiddleware, validatorGetItem, getItems)
 router.get("/:id", authMiddleware, validatorGetItem, getItem)
 router.post("/", authMiddleware, checkRol(["admin"]), validatorCreateItem, createItem)
 router.put('/:id', authMiddleware, validatorGetItem, validatorCreateItem, updateItem)
