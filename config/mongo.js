@@ -10,9 +10,9 @@ const dbConnect = () => {
     },
         (err, res) => {
             if (!err) {
-                console.log('Conexion correcta')
+                console.log('Mongo Conexion correcta')
             } else {
-                console.log('Error de conexion')
+                console.log('Mongo Error de conexion')
             }
         })
 }
