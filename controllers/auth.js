@@ -17,6 +17,8 @@ const registerCtrl = async (req, res) => {
             user: dataUser
         }
         console.log(body)
+
+        res.status(201)
         res.send({ data })
     } catch (error) {
 

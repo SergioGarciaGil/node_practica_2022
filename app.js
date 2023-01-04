@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const morganBody = require('morgan-body')
 const dbConnectNoSql = require('./config/mongo')
-const { dbConnectMySql } = require('./config/mysql')
+const { dbConnectPostgres } = require('./config/postgres')
 
 const app = express()
 const ENGINE_DB = process.env.ENGINE_DB
@@ -25,4 +25,4 @@ app.listen(port, () => {
     console.log(`Tu app esta lista por tu http://localhost:${port}`)
 });
 
-(ENGINE_DB === 'nosql') ? dbConnectNoSql() : dbConnectMySql()
+(ENGINE_DB === 'nosql') ? dbConnectNoSql() : dbConnectPostgres()

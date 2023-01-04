@@ -1,5 +1,5 @@
-const { sequelize } = require('../../config/mysql')
-const { DataTypes, Model } = require('sequelize')
+const { sequelize } = require('../../config/postgres')
+const { DataTypes } = require("sequelize")
 
 const Tracks = sequelize.define(
     "tracks", {

@@ -6,7 +6,7 @@ const { getItems, getItem, createItem, updateItem, deleteItem } = require('../co
 const checkRol = require('../milddeware/rol');
 router.get('/', authMiddleware, validatorGetItem, getItems)
 router.get("/:id", authMiddleware, validatorGetItem, getItem)
-router.post("/", authMiddleware, checkRol(["admin"]), validatorCreateItem, createItem)
+router.post("/", authMiddleware, validatorCreateItem, createItem)
 router.put('/:id', authMiddleware, validatorGetItem, validatorCreateItem, updateItem)
 router.delete('/:id', authMiddleware, validatorGetItem, deleteItem)
 
