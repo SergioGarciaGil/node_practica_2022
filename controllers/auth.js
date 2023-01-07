@@ -3,12 +3,20 @@ const { encrypt, compare } = require('../utils/handdlePassword')
 const { tokenSign } = require('../utils/handdleJwt')
 const { usersModel } = require('../models')
 const { handdleHttpError } = require('../utils/handdleError')
+const emailer = require('../config/emailer')
 
-const registerCtrl = async (req, res) => {
+const registerCtrl = async (req, res, next) => {
     try {
         req = matchedData(req)
         const password = await encrypt(req.password)
         const body = { ...req, password }
+
+        const emailExiste = await usersModel.find({ email: body.email }).countDocuments() > 0
+        if (emailExiste) {
+            res.status(403).send({ message: "Correo existe en la base de datos" })
+            return
+        }
+
         const dataUser = await usersModel.create(body)
         dataUser.set('password', undefined, { strict: false })
 
@@ -17,9 +25,11 @@ const registerCtrl = async (req, res) => {
             user: dataUser
         }
         console.log(body)
-
+        emailer.sendMail()
         res.status(201)
         res.send({ data })
+
+
     } catch (error) {
 
         handdleHttpError(res, 'ERROR_REGISTER_USER', 404)
@@ -53,6 +63,7 @@ const loginCtrl = async (req, res) => {
         }
         console.log({ data })
         res.send({ data })
+
     } catch (error) {
 
         handdleHttpError(res, 'ERROR_LOGIN_USER', 401)

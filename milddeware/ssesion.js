@@ -14,7 +14,9 @@ const authMiddleware = async (req, res, next) => {
         const dataToken = await verifyToken(token)
         if (!dataToken) {
             handdleHttpError(res, "NO_PAYLOAD_DATA", 401)
+            return
         }
+
 
         // if (!dataToken._id) {
         //     handdleHttpError(res, "ERROR_ID_TOKEN", 401)
